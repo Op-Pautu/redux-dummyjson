@@ -1,32 +1,12 @@
 "use client";
 
 import Product from "@/components/Product";
+import { useAxios } from "@/lib/useAxios";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [products, setProducts] = useState(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const fetchProducts = () => {
-    axios
-      .get("https://dummyjson.com/products")
-      .then((res) => {
-        const data = res.data;
-        setProducts(data.products);
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { products, error, loading } = useAxios();
 
   return (
     <div className="flex w-full mx-auto bg-zinc-100 flex-col h-full">
