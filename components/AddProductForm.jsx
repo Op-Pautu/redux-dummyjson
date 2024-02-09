@@ -1,29 +1,25 @@
 "use client";
 
 import { addProduct } from "@/lib/features/productSlice";
-import { useAppSelector } from "@/lib/hooks";
-import { nanoid } from "@reduxjs/toolkit";
+import { useAppDispatch } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 const AddProductForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const products = useAppSelector((state) => state.products);
-  console.log(products);
-  const dispatch = useDispatch();
+
+  // const products = useAppSelector((state) => state.products);
+  // console.log(products);
+  const dispatch = useAppDispatch();
   const router = useRouter();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addProduct({
-        id: nanoid(),
-        title,
-        description,
-      })
-    );
+    if (title && description) {
+      dispatch(addProduct(title, description));
+    }
     setTitle("");
     setDescription("");
     toast.success("Added Product");
