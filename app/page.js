@@ -1,26 +1,20 @@
-"use client";
-
-import Product from "@/components/Product";
-import { useAxios } from "@/lib/useAxios";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import Products from "@/components/Products";
+import Link from "next/link";
 
 export default function Home() {
-  const { products, error, loading } = useAxios();
-
   return (
-    <div className="flex w-full mx-auto bg-zinc-100 flex-col h-full">
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <div className="p-16 grid grid-cols-4 gap-8 max-w-[1600px] bg-slate-100 mx-auto">
-          {products.map((product) => (
-            <Product key={product.id} product={product} />
-          ))}
+    <div className="flex flex-col w-full h-full mx-auto bg-zinc-100">
+      <div className="p-16 grid grid-cols-4 gap-8 max-w-[1600px] bg-slate-100 mx-auto">
+        <div className="col-span-4 mx-auto">
+          <Link
+            href="/add"
+            className="px-8 py-4 text-lg text-white bg-blue-600 border rounded-lg shadow-md hover:bg-blue-700"
+          >
+            Add a new product
+          </Link>
         </div>
-      )}
+        <Products />
+      </div>
     </div>
   );
 }
