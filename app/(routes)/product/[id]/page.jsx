@@ -1,6 +1,8 @@
 import React from "react";
 
-const ProductPage = () => {
+const ProductPage = ({ params }) => {
+  const id = params.id;
+  console.log(id);
   return <div>ProductPage</div>;
 };
 
