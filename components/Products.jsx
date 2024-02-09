@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 import React, { useEffect } from "react";
 import Spinner from "./Spinner";
+import Link from "next/link";
 
 const Products = () => {
   const products = useAppSelector((state) => state.products.products);
@@ -42,6 +43,12 @@ const Products = () => {
                 <h4>{product.title}</h4>
               </div>
               <p className="h-1/2">{product.description}</p>
+              <Link
+                href={`/products/${product.id}`}
+                className="px-8 py-4 font-bold text-center text-white bg-blue-400 rounded-sm hover:bg-blue-600"
+              >
+                View Product
+              </Link>
             </div>
           ))}
       </>
