@@ -3,7 +3,7 @@ import React from "react";
 
 const AddPage = () => {
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <AddProductForm />
     </div>
   );
