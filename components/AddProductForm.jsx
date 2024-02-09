@@ -1,23 +1,35 @@
 "use client";
 
 import { addProduct } from "@/lib/features/productSlice";
+import { useAppSelector } from "@/lib/hooks";
+import { nanoid } from "@reduxjs/toolkit";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const AddProductForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
+  const products = useAppSelector((state) => state.products);
+  console.log(products);
   const dispatch = useDispatch();
   const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addProduct(title, description));
+    dispatch(
+      addProduct({
+        id: nanoid(),
+        title,
+        description,
+      })
+    );
     setTitle("");
     setDescription("");
+    toast.success("Added Product");
     router.push("/");
   };
+
   return (
     <div className="max-w-3xl mx-auto mt-14">
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
@@ -46,6 +58,11 @@ const AddProductForm = () => {
           Add Product
         </button>
       </form>
+      {/* <div>
+        {products.map((product) => (
+          <div key={product.id}>{product.title}</div>
+        ))}
+      </div> */}
     </div>
   );
 };
