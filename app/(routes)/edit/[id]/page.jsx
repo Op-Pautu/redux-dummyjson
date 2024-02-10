@@ -1,5 +1,5 @@
 "use client";
-import { postUpdated } from "@/lib/features/productSlice";
+import { productUpdated } from "@/lib/features/productSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { redirect, useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -26,7 +26,7 @@ const EditPage = () => {
 
   const onSaveProductClicked = () => {
     if (title && description) {
-      dispatch(postUpdated({ id: id, title, description }));
+      dispatch(productUpdated({ id: id, title, description }));
       router.replace(`/products/${id}`);
     }
   };
