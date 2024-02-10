@@ -6,10 +6,15 @@ import { useParams } from "next/navigation";
 import React from "react";
 
 const ProductPage = () => {
-  const params = useParams();
-  const id = JSON.parse(params.id);
+  const { id } = useParams();
+
   const products = useAppSelector((state) => state.products.products);
-  const product = products.find((product) => product.id === id);
+
+  const product = products.find((product) =>
+    typeof product.id === "number"
+      ? product.id === parseInt(id)
+      : product.id === id
+  );
   console.log(product);
   if (!product) {
     return (
@@ -22,7 +27,7 @@ const ProductPage = () => {
   return (
     <div className="flex items-center justify-center mt-20">
       <div className="rounded-lg flex flex-col gap-4 text-black px-4 py-2 h-[650px] w-[800px]">
-        <div className="flex">
+        <div className="flex gap-8">
           <img
             src={product.images ? product.images[0] : "/default-slate.png"}
             alt=""
@@ -40,10 +45,10 @@ const ProductPage = () => {
             </p>
           </div>
         </div>
-        <div className="mx-auto mt-6">
+        <div className="flex w-full mx-auto mt-6">
           <Link
             href={`/edit/${product.id}`}
-            className="py-4 text-white bg-blue-400 rounded-lg px-14 hover:bg-blue-600"
+            className="w-full py-4 text-center text-white bg-blue-400 rounded-lg px-14 hover:bg-blue-600"
           >
             Edit Product
           </Link>

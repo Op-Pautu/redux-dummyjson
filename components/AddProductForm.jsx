@@ -1,6 +1,6 @@
 "use client";
 
-import { addNewProduct, addProduct } from "@/lib/features/productSlice";
+import { productAdded } from "@/lib/features/productSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -9,30 +9,24 @@ import { toast } from "sonner";
 const AddProductForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [addRequestStatus, setAddRequestStatus] = useState("idle");
+
   // const products = useAppSelector((state) => state.products);
   // console.log(products);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const canSave =
-    [title, description].every(Boolean) && addRequestStatus === "idle";
 
-  const handleSubmit = async () => {
-    if (canSave) {
-      try {
-        setAddRequestStatus("pending");
-        if (title && description) {
-          await dispatch(addNewProduct({ title, description })).unwrap();
-        }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    try {
+      if (title && description) {
+        dispatch(productAdded(title, description));
         setTitle("");
         setDescription("");
-        toast.success("Added Product");
-        router.push("/");
-      } catch (error) {
-        console.log("Failed to save the post: ", error);
-      } finally {
-        setAddRequestStatus("idle");
       }
+      toast.success("Added Product");
+      router.push("/");
+    } catch (error) {
+      console.log("Failed to add the post: ", error);
     }
   };
 

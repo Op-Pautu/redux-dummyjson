@@ -1,14 +1,19 @@
 "use client";
+import { postUpdated } from "@/lib/features/productSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const EditPage = () => {
-  const params = useParams();
-  const id = JSON.parse(params.id);
+  const { id } = useParams();
 
   const products = useAppSelector((state) => state.products.products);
-  const product = products.find((product) => product.id === id);
+
+  const product = products.find((product) =>
+    typeof product.id === "number"
+      ? product.id === parseInt(id)
+      : product.id === id
+  );
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -21,10 +26,11 @@ const EditPage = () => {
 
   const onSaveProductClicked = () => {
     if (title && description) {
-      dispatch(postUpdated({ id: postId, title, content }));
-      router.push(`/posts/${postId}`);
+      dispatch(postUpdated({ id: id, title, description }));
+      router.replace(`/products/${id}`);
     }
   };
+
   return (
     <section className="max-w-4xl mx-auto mt-14">
       <form className="flex flex-col gap-4">
