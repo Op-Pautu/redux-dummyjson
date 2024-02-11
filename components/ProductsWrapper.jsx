@@ -1,13 +1,8 @@
-"use client";
-import { fetchProducts } from "@/lib/features/productSlice";
-import useFetchProducts, { useAppDispatch, useAppSelector } from "@/lib/hooks";
-
-import React, { useEffect } from "react";
-
 import Link from "next/link";
-import Products from "@/components/Products";
+import React from "react";
+import Products from "./Products";
 
-const HomePage = () => {
+const ProductsWrapper = () => {
   return (
     <div className="flex flex-col w-full h-full mx-auto bg-zinc-100">
       <div className="p-16 grid grid-cols-4 gap-8 max-w-[1600px] bg-slate-100 mx-auto">
@@ -24,4 +19,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default ProductsWrapper;

@@ -1,6 +1,6 @@
 "use client";
 import { fetchProducts } from "@/lib/features/productSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import useFetchProducts, { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 import React, { useEffect } from "react";
 import Spinner from "./Spinner";
@@ -8,17 +8,9 @@ import Link from "next/link";
 
 const Products = () => {
   const products = useAppSelector((state) => state.products.products);
-
-  const dispatch = useAppDispatch();
   const productStatus = useAppSelector((state) => state.products.status);
 
-  useEffect(() => {
-    if (productStatus === "idle") {
-      dispatch(fetchProducts());
-    }
-  }, [productStatus, dispatch]);
-
-  if (productStatus === "loading") return <p>Loading</p>;
+  if (productStatus === "loading") return <Spinner />;
 
   if (productStatus === "succeeded") {
     return (
